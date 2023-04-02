@@ -11,8 +11,8 @@ export default function Post({ post: { properties, markdown } }: Props) {
   return (
     <article className="">
       <header>
-        <h1 className="text-4xl font-bold mb-1">{properties.title}</h1>
-        <p className="text-gray-400 font-serif space-x-1">
+        <h1 className="mb-1 text-4xl font-bold">{properties.title}</h1>
+        <p className="space-x-1 font-serif text-gray-400">
           <DateTime dateString={properties.date} relative />
           {' /'}
           {properties.tags.map(({ name: tag }) => (

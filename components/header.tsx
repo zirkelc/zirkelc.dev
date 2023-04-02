@@ -5,10 +5,10 @@ import Image from 'next/image';
 export default function Header() {
   return (
     <Container>
-      <header className="py-6 flex flex-row justify-between">
+      <header className="flex flex-row justify-between py-6">
         <Link
           href="/"
-          className="bg-black hover:bg-white hover:text-black border border-black text-white font-bold px-4 py-2 duration-200 transition-colors"
+          className="border border-black bg-black px-4 py-2 font-bold text-white transition-colors duration-200 hover:bg-white hover:text-black"
         >
           zirkelc.dev
         </Link>

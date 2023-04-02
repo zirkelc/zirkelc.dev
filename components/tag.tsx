@@ -12,7 +12,7 @@ export default function Tag({ tag, hover }: Props) {
       href="/tags/[tag]"
       className={`${
         hover ? 'bg-black text-white' : ''
-      } hover:bg-black hover:text-white duration-200 transition-colors p-0.5`}
+      } p-0.5 transition-colors duration-200 hover:bg-black hover:text-white`}
     >
       {`#${tag}`}
     </Link>

@@ -11,14 +11,14 @@ export default function PostList({ posts }: Props) {
     <ul>
       {posts.map((post) => (
         <li key={post.properties.slug} className="my-6 flex">
-          <div className="w-1/4 font-serif text-gray-400 text-right pr-2">
+          <div className="w-1/4 pr-2 text-right font-serif text-gray-400">
             <DateTime dateString={post.properties.date} />
           </div>
-          <div className="w-3/4 ...">
+          <div className="... w-3/4">
             <Link
               as={`/posts/${post.properties.slug}`}
               href="/posts/[slug]"
-              className="truncate hover:bg-black hover:text-white text-black font-bold py-2 px-2 duration-200 transition-colors"
+              className="truncate px-2 py-2 font-bold text-black transition-colors duration-200 hover:bg-black hover:text-white"
             >
               {post.properties.title}
             </Link>

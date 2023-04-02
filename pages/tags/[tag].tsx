@@ -55,7 +55,7 @@ export default function TagPage({ tag, posts }: InferGetStaticPropsType<typeof g
         <title>Posts tagged with {tag}</title>
       </Head>
 
-      <h1 className="text-4xl font-bold mb-1">Posts tagged with {<Tag tag={tag} hover />}</h1>
+      <h1 className="mb-1 text-4xl font-bold">Posts tagged with {<Tag tag={tag} hover />}</h1>
 
       {router.isFallback ? <div>Loading…</div> : <PostList posts={posts} />}
     </Container>
