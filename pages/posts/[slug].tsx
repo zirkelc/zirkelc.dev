@@ -1,13 +1,15 @@
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import ErrorPage from 'next/error';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { Fragment } from 'react';
 import Container from '../../components/container';
 import Post from '../../components/post';
 import { getAllPosts, getSinglePostBySlug, NotionPost } from '../../lib/notion';
 
 type Params = {
-  slug: string;
+  slug?: string;
 };
 
 type Props = {
@@ -15,9 +17,8 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
-  if (!params?.slug) return { notFound: true };
-
   const post = await getSinglePostBySlug(params?.slug);
+  if (!post) return { notFound: true };
 
   return {
     props: {
@@ -33,7 +34,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    // fallback: 'blocking',
     fallback: false,
   };
 };
@@ -41,7 +41,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export default function PostPage({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
 
-  if (!router.isFallback && !post.properties?.slug) {
+  if (router.isFallback && !post?.properties) {
     return <ErrorPage statusCode={404} />;
   }
 

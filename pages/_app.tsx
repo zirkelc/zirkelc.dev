@@ -9,7 +9,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Clone and deploy your own Next.js portfolio in minutes." />
+        <meta name="description" content="Chris Zirkel's personal knowledge base" />
         <title>zirkelc.dev</title>
       </Head>
 

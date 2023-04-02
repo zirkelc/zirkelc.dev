@@ -1,11 +1,11 @@
-import Post from '../../components/post';
-import { getAllPosts, getAllPostsByTag, NotionPost } from '../../lib/notion';
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import Container from '../../components/container';
 import { useRouter } from 'next/router';
+import Container from '../../components/container';
 import PostList from '../../components/post-list';
 import Tag from '../../components/tag';
+import { getAllPosts, getAllPostsByTag, NotionPost } from '../../lib/notion';
+import ErrorPage from 'next/error';
 
 type Params = {
   tag: string;
@@ -17,9 +17,7 @@ type Props = {
 };
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {
-  if (!params?.tag) return { notFound: true };
-
-  const tag = params.tag;
+  const { tag } = params;
   const posts = await getAllPostsByTag(tag);
 
   return {
@@ -37,17 +35,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    // fallback: 'blocking',
     fallback: false,
   };
 };
 
 export default function TagPage({ tag, posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
-
-  // if (!router.isFallback && !post?.slug) {
-  //   return <ErrorPage statusCode={404} />;
-  // }
 
   return (
     <Container>
