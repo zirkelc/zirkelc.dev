@@ -50,7 +50,6 @@ export default function PostPage({ post }: InferGetStaticPropsType<typeof getSta
       <Head>
         <title>{post.properties.title}</title>
         <meta property="og:title" content={post.properties.title} />
-        <meta property="og:description" content={post.properties.description} />
       </Head>
 
       {router.isFallback ? (

@@ -12,7 +12,7 @@ export default function PostList({ posts }: Props) {
     <div className="grid grid-cols-1 md:grid-cols-[160px_auto] md:gap-x-2 md:gap-y-4">
       {posts.map((post) => (
         <Fragment key={post.properties.slug}>
-          <div className="font-serif text-gray-400 md:text-right">
+          <div className="flex items-center justify-start font-serif text-gray-400 md:justify-end ">
             <DateTime dateString={post.properties.date} />
           </div>
           <div className="mb-6 flex md:mb-0">
