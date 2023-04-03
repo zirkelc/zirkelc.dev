@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Fragment } from 'react';
 import { NotionPost } from '../lib/notion';
 import DateTime from './datetime';
 
@@ -8,24 +9,24 @@ type Props = {
 
 export default function PostList({ posts }: Props) {
   return posts.length ? (
-    <ul>
+    <div className="grid grid-cols-1 md:grid-cols-[160px_auto] md:gap-x-2 md:gap-y-4">
       {posts.map((post) => (
-        <li key={post.properties.slug} className="my-6 flex">
-          <div className="w-1/4 pr-2 text-right font-serif text-gray-400">
+        <Fragment key={post.properties.slug}>
+          <div className="font-serif text-gray-400 md:text-right">
             <DateTime dateString={post.properties.date} />
           </div>
-          <div className="... w-3/4">
+          <div className="mb-6 flex md:mb-0">
             <Link
               as={`/posts/${post.properties.slug}`}
               href="/posts/[slug]"
-              className="truncate px-2 py-2 font-bold text-black transition-colors duration-200 hover:bg-black hover:text-white"
+              className="truncate font-bold text-black transition-colors duration-200 hover:bg-black hover:text-white md:p-2"
             >
               {post.properties.title}
             </Link>
           </div>
-        </li>
+        </Fragment>
       ))}
-    </ul>
+    </div>
   ) : (
     <p>No posts yet</p>
   );
