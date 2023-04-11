@@ -45,6 +45,8 @@ export default function PostPage({ post }: InferGetStaticPropsType<typeof getSta
     return <ErrorPage statusCode={404} />;
   }
 
+  // router.back();
+
   return (
     <Container>
       <Head>
@@ -55,9 +57,10 @@ export default function PostPage({ post }: InferGetStaticPropsType<typeof getSta
       {router.isFallback ? (
         <div>Loading…</div>
       ) : (
-        <div>
+        <>
           <Post post={post} />
-        </div>
+          {/* <hr /> */}
+        </>
       )}
     </Container>
   );
