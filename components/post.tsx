@@ -7,11 +7,11 @@ type Props = {
   post: NotionPost;
 };
 
-export default function Post({ post: { properties, markdown } }: Props) {
+export default function Post({ post: { properties, markdown, blocks } }: Props) {
   return (
-    <article className="">
+    <article>
       <header>
-        <h1 className="mb-1 text-4xl font-bold">{properties.title}</h1>
+        <h1 className="mb-1 font-serif text-4xl font-bold">{properties.title}</h1>
         <p className="space-x-1 font-serif text-gray-400">
           <DateTime dateString={properties.date} relative />
           {' /'}

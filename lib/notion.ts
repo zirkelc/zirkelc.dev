@@ -1,11 +1,14 @@
 import { Client } from '@notionhq/client';
 import {
+  EquationBlockObjectResponse,
+  ImageBlockObjectResponse,
   MultiSelectPropertyItemObjectResponse,
   PageObjectResponse,
   PartialPageObjectResponse,
   QueryDatabaseParameters,
 } from '@notionhq/client/build/src/api-endpoints';
-import { NotionToMarkdown } from 'notion-to-md';
+import { NotionToMarkdown } from './notion-to-md';
+import { ListBlockChildrenResponseResults } from 'notion-to-md/build/types';
 
 type Tag = { name: string; color: string };
 
@@ -31,6 +34,30 @@ const notion = new Client({
 });
 
 const n2m = new NotionToMarkdown({ notionClient: notion });
+
+n2m.setCustomTransformer('image', async (block) => {
+  const { image } = block as ImageBlockObjectResponse;
+  const src = image.type === 'external' ? image.external.url : image.file.url;
+  const caption = image.caption?.length > 0 ? image.caption[0]?.plain_text : '';
+
+  return `
+  <figure>
+    <img src="${src}" alt=${caption} />
+    <figcaption>${caption}</figcaption>
+  </figure>`;
+});
+
+// n2m.setCustomTransformer('equation', async (block) => {
+//   const { equation } = block as EquationBlockObjectResponse;
+//   const expression = equation.expression;
+
+//   return `
+//   $$
+//   ${expression}
+//   $$`;
+// });
+
+const isPublishedProperty = process.env.NODE_ENV === 'development' ? 'Dev' : 'Published';
 
 type Filter = Pick<QueryDatabaseParameters, 'filter'>;
 const query = async (filter: Filter): Promise<NotionPost[]> => {
@@ -66,7 +93,7 @@ export const create = async (post: NotionPost): Promise<NotionPost['id']> => {
         ],
       },
       Tags: {
-        multi_select: post.properties.tags.map(({ name }) => ({ name })).sort(),
+        multi_select: post.properties.tags.map(({ name }) => ({ name })).sort((a, b) => a.name.localeCompare(b.name)),
       },
       // Description: {
       //   rich_text: [
@@ -100,21 +127,51 @@ export const create = async (post: NotionPost): Promise<NotionPost['id']> => {
   return page.id;
 };
 
+export const queryBlocks = async (block_id: string) => {
+  const result: ListBlockChildrenResponseResults = [];
+  let start_cursor = undefined;
+
+  do {
+    const response = await notion.blocks.children.list({
+      start_cursor,
+      block_id,
+    });
+
+    result.push(...response.results);
+
+    start_cursor = response?.next_cursor;
+  } while (start_cursor != null);
+
+  modifyNumberedListObject(result);
+  return result;
+};
+
+export const modifyNumberedListObject = (blocks: ListBlockChildrenResponseResults) => {
+  let numberedListIndex = 0;
+
+  for (const block of blocks) {
+    if ('type' in block && block.type === 'numbered_list_item') {
+      // add numbers
+      // @ts-ignore
+      block.numbered_list_item.number = ++numberedListIndex;
+    } else {
+      numberedListIndex = 0;
+    }
+  }
+};
+
 const getTags = (tags: MultiSelectPropertyItemObjectResponse['multi_select']) =>
-  tags.map(({ name, color }) => ({ name, color }));
+  tags.map(({ name, color }) => ({ name, color })).sort((a, b) => a.name.localeCompare(b.name));
 
 const getProperties = (page: PageObjectResponse): Properties => {
   const title = 'title' in page.properties.Name ? page.properties.Name.title[0].plain_text : '';
   const tags = 'multi_select' in page.properties.Tags ? getTags(page.properties.Tags.multi_select) : [];
-  // const description =
-  //   'rich_text' in page.properties.Description ? page.properties.Description.rich_text[0].plain_text : '';
   const date = 'date' in page.properties.Date ? page.properties.Date.date?.start || '' : '';
   const slug = 'rich_text' in page.properties.Slug ? page.properties.Slug.rich_text[0].plain_text : '';
 
   return {
     title,
     tags,
-    // description,
     date,
     slug,
   };
@@ -130,7 +187,7 @@ const getMarkdown = async (id: string): Promise<Markdown> => {
 export const getAllPosts = async (): Promise<NotionPost[]> => {
   const posts = await query({
     filter: {
-      property: 'Published',
+      property: isPublishedProperty,
       checkbox: {
         equals: true,
       },
@@ -151,7 +208,7 @@ export const getAllPostsByTag = async (tag: string): Promise<NotionPost[]> => {
           },
         },
         {
-          property: 'Published',
+          property: isPublishedProperty,
           checkbox: {
             equals: true,
           },
@@ -176,7 +233,7 @@ export const getSinglePostBySlug = async (slug: string): Promise<NotionPost | nu
           },
         },
         {
-          property: 'Published',
+          property: isPublishedProperty,
           checkbox: {
             equals: true,
           },
@@ -189,62 +246,7 @@ export const getSinglePostBySlug = async (slug: string): Promise<NotionPost | nu
 
   const [post] = posts;
   const markdown = await getMarkdown(post.id);
-  const blocks = await getBlocks(post.id);
+  // const blocks = await getBlocks(post.id);
 
-  return { ...post, markdown, blocks };
+  return { ...post, markdown };
 };
-
-export const getBlocks = async (blockId) => {
-  blockId = blockId.replaceAll('-', '');
-
-  const { results } = await notion.blocks.children.list({
-    block_id: blockId,
-    page_size: 100,
-  });
-
-  // Fetches all child blocks recursively - be mindful of rate limits if you have large amounts of nested blocks
-  // See https://developers.notion.com/docs/working-with-page-content#reading-nested-blocks
-  const childBlocks = results.map(async (block) => {
-    //@ts-ignore
-    if (block.has_children) {
-      const children = await getBlocks(block.id);
-      return { ...block, children };
-    }
-    return block;
-  });
-
-  return await Promise.all(childBlocks).then((blocks) => {
-    return blocks.reduce((acc, curr) => {
-      if (curr.type === 'bulleted_list_item') {
-        if (acc[acc.length - 1]?.type === 'bulleted_list') {
-          acc[acc.length - 1][acc[acc.length - 1].type].children?.push(curr);
-        } else {
-          acc.push({
-            id: getRandomInt(10 ** 99, 10 ** 100).toString(),
-            type: 'bulleted_list',
-            bulleted_list: { children: [curr] },
-          });
-        }
-      } else if (curr.type === 'numbered_list_item') {
-        if (acc[acc.length - 1]?.type === 'numbered_list') {
-          acc[acc.length - 1][acc[acc.length - 1].type].children?.push(curr);
-        } else {
-          acc.push({
-            id: getRandomInt(10 ** 99, 10 ** 100).toString(),
-            type: 'numbered_list',
-            numbered_list: { children: [curr] },
-          });
-        }
-      } else {
-        acc.push(curr);
-      }
-      return acc;
-    }, []);
-  });
-};
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}

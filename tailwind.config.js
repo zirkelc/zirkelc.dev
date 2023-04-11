@@ -23,6 +23,10 @@ module.exports = {
                 backgroundColor: theme('colors.black'),
               },
             },
+
+            figcaption: {
+              'text-align': 'center',
+            },
           },
         },
       }),
