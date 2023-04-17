@@ -7,8 +7,7 @@ import {
   PartialPageObjectResponse,
   QueryDatabaseParameters,
 } from '@notionhq/client/build/src/api-endpoints';
-import { NotionToMarkdown } from './notion-to-md';
-import { ListBlockChildrenResponseResults } from 'notion-to-md/build/types';
+import { NotionToMarkdown } from 'notion-to-md';
 
 type Tag = { name: string; color: string };
 
@@ -125,39 +124,6 @@ export const create = async (post: NotionPost): Promise<NotionPost['id']> => {
   });
 
   return page.id;
-};
-
-export const queryBlocks = async (block_id: string) => {
-  const result: ListBlockChildrenResponseResults = [];
-  let start_cursor = undefined;
-
-  do {
-    const response = await notion.blocks.children.list({
-      start_cursor,
-      block_id,
-    });
-
-    result.push(...response.results);
-
-    start_cursor = response?.next_cursor;
-  } while (start_cursor != null);
-
-  modifyNumberedListObject(result);
-  return result;
-};
-
-export const modifyNumberedListObject = (blocks: ListBlockChildrenResponseResults) => {
-  let numberedListIndex = 0;
-
-  for (const block of blocks) {
-    if ('type' in block && block.type === 'numbered_list_item') {
-      // add numbers
-      // @ts-ignore
-      block.numbered_list_item.number = ++numberedListIndex;
-    } else {
-      numberedListIndex = 0;
-    }
-  }
 };
 
 const getTags = (tags: MultiSelectPropertyItemObjectResponse['multi_select']) =>

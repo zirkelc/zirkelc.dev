@@ -26,8 +26,8 @@ dependencies:
     specifier: latest
     version: 13.3.0(react-dom@18.2.0)(react@18.2.0)
   notion-to-md:
-    specifier: github:zirkelc/notion-to-md
-    version: github.com/zirkelc/notion-to-md/8780009298fb8b3c08d40b04bef605d8e4df72d1
+    specifier: ^2.5.6
+    version: 2.5.6
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -2767,6 +2767,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
+  /notion-to-md@2.5.6:
+    resolution: {integrity: sha512-jgLZY1MaUuYSoyoDxKs43WXnbhhSdT9c3auhfex2ZT151yut4v8aT04G8b3o98qnbRO4GQ08x5Y2zX8gEfFAiw==}
+    engines: {node: '>=12'}
+    dependencies:
+      markdown-table: 2.0.0
+    dev: false
+
   /object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
@@ -3939,15 +3946,4 @@ packages:
 
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
-    dev: false
-
-  github.com/zirkelc/notion-to-md/8780009298fb8b3c08d40b04bef605d8e4df72d1:
-    resolution: {tarball: https://codeload.github.com/zirkelc/notion-to-md/tar.gz/8780009298fb8b3c08d40b04bef605d8e4df72d1}
-    name: notion-to-md
-    version: 2.5.5
-    engines: {node: '>=12'}
-    prepare: true
-    requiresBuild: true
-    dependencies:
-      markdown-table: 2.0.0
     dev: false
