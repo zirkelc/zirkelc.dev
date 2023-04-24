@@ -24,7 +24,7 @@ export default function Header() {
               Z.
             </Link>
           </div>
-          <NavLink href="/">Home</NavLink>
+          {/* <NavLink href="/">Home</NavLink> */}
           {/* <NavLink href="/about">About</NavLink> */}
         </nav>
 
