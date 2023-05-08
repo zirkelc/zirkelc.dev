@@ -5,6 +5,7 @@ import Container from '../../components/container';
 import PostList from '../../components/post-list';
 import Tag from '../../components/tag';
 import { NotionPost, getAllPosts, getAllPostsByTag } from '../../lib/notion';
+import Meta from '../../components/meta';
 
 type Params = {
   tag: string;
@@ -43,9 +44,7 @@ export default function TagPage({ tag, posts }: InferGetStaticPropsType<typeof g
 
   return (
     <Container>
-      <Head>
-        <title>Posts tagged with {tag}</title>
-      </Head>
+      <Meta title={`Posts tagged with ${tag}`} />
 
       <h1 className="mb-1 text-4xl font-bold">Posts tagged with {<Tag tag={tag} hover />}</h1>
 

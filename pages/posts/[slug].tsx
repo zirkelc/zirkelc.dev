@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Container from '../../components/container';
 import Post from '../../components/post';
 import { NotionPost, getAllPosts, getSinglePostBySlug } from '../../lib/notion';
+import Meta from '../../components/meta';
 
 type Params = {
   slug?: string;
@@ -37,10 +38,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export default function PostPage({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Container>
-      <Head>
-        <title>{post.properties.title}</title>
-        <meta property="og:title" content={post.properties.title} />
-      </Head>
+      <Meta title={post.properties.title} />
+
       <Post post={post} />
     </Container>
   );
