@@ -4,8 +4,7 @@ import { useRouter } from 'next/router';
 import Container from '../../components/container';
 import PostList from '../../components/post-list';
 import Tag from '../../components/tag';
-import { getAllPosts, getAllPostsByTag, NotionPost } from '../../lib/notion';
-import ErrorPage from 'next/error';
+import { NotionPost, getAllPosts, getAllPostsByTag } from '../../lib/notion';
 
 type Params = {
   tag: string;
@@ -35,7 +34,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   };
 };
 
@@ -50,7 +49,7 @@ export default function TagPage({ tag, posts }: InferGetStaticPropsType<typeof g
 
       <h1 className="mb-1 text-4xl font-bold">Posts tagged with {<Tag tag={tag} hover />}</h1>
 
-      {router.isFallback ? <div>Loading…</div> : <PostList posts={posts} />}
+      <PostList posts={posts} />
     </Container>
   );
 }
