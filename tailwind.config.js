@@ -9,6 +9,13 @@ module.exports = {
   },
   theme: {
     extend: {
+      // a: ({ theme }) => ({
+      //   color: theme('colors.black'),
+      //   '&:hover': {
+      //     color: theme('colors.white'),
+      //     backgroundColor: theme('colors.black'),
+      //   },
+      // }),
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {

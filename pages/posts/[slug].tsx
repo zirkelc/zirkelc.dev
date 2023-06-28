@@ -1,9 +1,7 @@
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
-import Container from '../../components/container';
+import Meta from '../../components/meta';
 import Post from '../../components/post';
 import { NotionPost, getAllPosts, getSinglePostBySlug } from '../../lib/notion';
-import Meta from '../../components/meta';
 
 type Params = {
   slug?: string;
@@ -37,10 +35,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export default function PostPage({ post }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
-    <Container>
+    <>
       <Meta title={post.properties.title} />
 
       <Post post={post} />
-    </Container>
+    </>
   );
 }

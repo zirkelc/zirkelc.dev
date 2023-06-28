@@ -1,9 +1,6 @@
-import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import Link from 'next/link';
-import Container from '../../components/container';
-import DateTime from '../../components/datetime';
+import type { GetStaticProps, InferGetStaticPropsType } from 'next';
 import PostList from '../../components/post-list';
-import { getAllPosts, getAllPostsByTag, NotionPost } from '../../lib/notion';
+import { NotionPost, getAllPosts } from '../../lib/notion';
 
 type Props = {
   posts: NotionPost[];
@@ -21,9 +18,5 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 };
 
 export default function Posts({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return (
-    <Container>
-      <PostList posts={posts} />
-    </Container>
-  );
+  return <PostList posts={posts} />;
 }

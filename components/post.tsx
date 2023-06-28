@@ -1,8 +1,6 @@
 import { NotionPost } from '../lib/notion';
-import DateTime from './datetime';
 import Markdown from './markdown';
 import PostHeader from './post-header';
-import Tag from './tag';
 
 type Props = {
   post: NotionPost;

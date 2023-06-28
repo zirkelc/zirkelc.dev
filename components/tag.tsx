@@ -4,6 +4,7 @@ type Props = {
   tag: string;
   hover?: boolean;
 };
+
 export default function Tag({ tag, hover }: Props) {
   return (
     <Link

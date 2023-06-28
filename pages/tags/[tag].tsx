@@ -1,11 +1,9 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
-import Container from '../../components/container';
+import Meta from '../../components/meta';
 import PostList from '../../components/post-list';
 import Tag from '../../components/tag';
 import { NotionPost, getAllPosts, getAllPostsByTag } from '../../lib/notion';
-import Meta from '../../components/meta';
 
 type Params = {
   tag: string;
@@ -43,12 +41,12 @@ export default function TagPage({ tag, posts }: InferGetStaticPropsType<typeof g
   const router = useRouter();
 
   return (
-    <Container>
+    <>
       <Meta title={`Posts tagged with ${tag}`} />
 
       <h1 className="mb-1 text-4xl font-bold">Posts tagged with {<Tag tag={tag} hover />}</h1>
 
       <PostList posts={posts} />
-    </Container>
+    </>
   );
 }

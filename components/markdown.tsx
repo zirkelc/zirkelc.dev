@@ -4,7 +4,7 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import Code from './code';
-// `rehype-katex` does not import the CSS for you
+// `rehype-katex` does not import the CSS
 import 'katex/dist/katex.min.css';
 
 type Props = {
