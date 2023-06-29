@@ -1,6 +1,6 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
-import Meta from '../components/meta';
-import PostList from '../components/post-list';
+import Meta from '../components/layout/meta';
+import PostList from '../components/post/post-list';
 import { NotionPost, getAllPosts } from '../lib/notion';
 
 type Props = {

@@ -1,9 +1,9 @@
 import 'tailwindcss/tailwind.css';
 
 import type { AppProps } from 'next/app';
-import Container from '../components/container';
-import Footer from '../components/footer';
-import Header from '../components/header';
+import Container from '../components/layout/container';
+import Footer from '../components/layout/footer';
+import Header from '../components/layout/header';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (

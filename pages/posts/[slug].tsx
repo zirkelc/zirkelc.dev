@@ -1,6 +1,6 @@
 import type { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
-import Meta from '../../components/meta';
-import Post from '../../components/post';
+import Meta from '../../components/layout/meta';
+import Post from '../../components/post/post';
 import { NotionPost, getAllPosts, getSinglePostBySlug } from '../../lib/notion';
 
 type Params = {

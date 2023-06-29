@@ -1,5 +1,5 @@
-import { NotionPost } from '../lib/notion';
-import Markdown from './markdown';
+import { NotionPost } from '../../lib/notion';
+import Markdown from '../controls/markdown';
 import PostHeader from './post-header';
 
 type Props = {

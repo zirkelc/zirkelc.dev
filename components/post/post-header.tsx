@@ -1,5 +1,5 @@
-import { NotionPost } from '../lib/notion';
-import DateTime from './datetime';
+import { NotionPost } from '../../lib/notion';
+import DateTime from '../controls/datetime';
 import Tag from './tag';
 
 type Props = {

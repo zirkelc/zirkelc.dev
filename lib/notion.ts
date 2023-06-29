@@ -1,10 +1,8 @@
 import { Client } from '@notionhq/client';
 import {
-  EquationBlockObjectResponse,
   ImageBlockObjectResponse,
   MultiSelectPropertyItemObjectResponse,
   PageObjectResponse,
-  PartialPageObjectResponse,
   QueryDatabaseParameters,
 } from '@notionhq/client/build/src/api-endpoints';
 import { NotionToMarkdown } from 'notion-to-md';
@@ -14,7 +12,6 @@ type Tag = { name: string; color: string };
 type Properties = {
   title: string;
   tags: Array<Tag>;
-  // description: string;
   date: string;
   slug: string;
 };
@@ -46,16 +43,6 @@ n2m.setCustomTransformer('image', async (block) => {
   </figure>`;
 });
 
-// n2m.setCustomTransformer('equation', async (block) => {
-//   const { equation } = block as EquationBlockObjectResponse;
-//   const expression = equation.expression;
-
-//   return `
-//   $$
-//   ${expression}
-//   $$`;
-// });
-
 const isPublishedProperty = process.env.NODE_ENV === 'development' ? 'Dev' : 'Published';
 
 type Filter = Pick<QueryDatabaseParameters, 'filter'>;
@@ -74,56 +61,6 @@ const query = async (filter: Filter): Promise<NotionPost[]> => {
   return pages.results
     .filter((page): page is PageObjectResponse => 'properties' in page)
     .map((page) => ({ id: page.id, properties: getProperties(page) }));
-};
-
-export const create = async (post: NotionPost): Promise<NotionPost['id']> => {
-  const page = await notion.pages.create({
-    parent: {
-      database_id: process.env.DATABASE_ID!,
-    },
-    properties: {
-      Name: {
-        title: [
-          {
-            text: {
-              content: post.properties.title,
-            },
-          },
-        ],
-      },
-      Tags: {
-        multi_select: post.properties.tags.map(({ name }) => ({ name })).sort((a, b) => a.name.localeCompare(b.name)),
-      },
-      // Description: {
-      //   rich_text: [
-      //     {
-      //       text: {
-      //         content: post.properties.description,
-      //       },
-      //     },
-      //   ],
-      // },
-      Date: {
-        date: {
-          start: post.properties.date,
-        },
-      },
-      Slug: {
-        rich_text: [
-          {
-            text: {
-              content: post.properties.slug,
-            },
-          },
-        ],
-      },
-      Published: {
-        checkbox: false,
-      },
-    },
-  });
-
-  return page.id;
 };
 
 const getTags = (tags: MultiSelectPropertyItemObjectResponse['multi_select']) =>
@@ -212,7 +149,6 @@ export const getSinglePostBySlug = async (slug: string): Promise<NotionPost | nu
 
   const [post] = posts;
   const markdown = await getMarkdown(post.id);
-  // const blocks = await getBlocks(post.id);
 
   return { ...post, markdown };
 };

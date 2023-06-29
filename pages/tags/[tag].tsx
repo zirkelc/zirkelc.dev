@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
-import Meta from '../../components/meta';
-import PostList from '../../components/post-list';
-import Tag from '../../components/tag';
+import Meta from '../../components/layout/meta';
+import PostList from '../../components/post/post-list';
+import Tag from '../../components/post/tag';
 import { NotionPost, getAllPosts, getAllPostsByTag } from '../../lib/notion';
 
 type Params = {

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Fragment } from 'react';
-import { NotionPost } from '../lib/notion';
-import DateTime from './datetime';
+import { NotionPost } from '../../lib/notion';
+import DateTime from '../controls/datetime';
 
 type Props = {
   posts: NotionPost[];
