@@ -43,7 +43,12 @@ n2m.setCustomTransformer('image', async (block) => {
   </figure>`;
 });
 
-const isPublishedProperty = process.env.NODE_ENV === 'development' ? 'Dev' : 'Published';
+const isPublishedProperty = {
+  property: `is${process.env.NODE_ENV[0].toUpperCase() + process.env.NODE_ENV.slice(1)}`,
+  checkbox: {
+    equals: true,
+  },
+};
 
 type Filter = Pick<QueryDatabaseParameters, 'filter'>;
 const query = async (filter: Filter): Promise<NotionPost[]> => {
@@ -90,10 +95,7 @@ const getMarkdown = async (id: string): Promise<Markdown> => {
 export const getAllPosts = async (): Promise<NotionPost[]> => {
   const posts = await query({
     filter: {
-      property: isPublishedProperty,
-      checkbox: {
-        equals: true,
-      },
+      ...isPublishedProperty,
     },
   });
 
@@ -111,10 +113,7 @@ export const getAllPostsByTag = async (tag: string): Promise<NotionPost[]> => {
           },
         },
         {
-          property: isPublishedProperty,
-          checkbox: {
-            equals: true,
-          },
+          ...isPublishedProperty,
         },
       ],
     },
@@ -136,10 +135,7 @@ export const getSinglePostBySlug = async (slug: string): Promise<NotionPost | nu
           },
         },
         {
-          property: isPublishedProperty,
-          checkbox: {
-            equals: true,
-          },
+          ...isPublishedProperty,
         },
       ],
     },
