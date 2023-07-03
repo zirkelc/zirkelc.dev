@@ -1,4 +1,7 @@
 {
+  "name": "zirkelc.dev",
+  "version": "1.0.0",
+  "homepage": "https://zirkelc.dev",
   "private": true,
   "scripts": {
     "dev": "next dev -p 4000",

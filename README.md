@@ -1,65 +1,68 @@
-# Blog with Comment
+# Welcome to zirkelc.dev
+This is the repository of my personal blog, [zirkelc.dev](https://zirkelc.dev). It's a platform where I share my ideas, experiences and expertise on a variety of subjects. 
 
-This project adds commenting functionality to [Next.js blog application](https://github.com/vercel/next.js/tree/canary/examples/blog) using Upstash and Auth0.
+The site is built using Notion as the Content Management System (CMS), Next.js as the React framework and Tailwind CSS for the styling. 
 
-The comment box requires Auth0 authentication for users to add new comments. A user can delete their own comment. Also admin user can delete any comment.
+# Before You Start
+This project is **heavily inspired** by the following two articles. If you're interested in the dibs and dabs of how it works, I would strongly encourage you to check out these great resources:
+- [Building a Notion Blog with Public API](https://samuelkraft.com/blog/building-a-notion-blog-with-public-api) by [Samuel Kraft](https://samuelkraft.com/)
+- [How to Create a Next.js Blog Using Notion as a CMS](https://bejamas.io/blog/how-to-create-next-js-blog-using-notion-as-a-cms/) by [Bejamas](https://bejamas.io/)
 
-Comments are stored in Serverless Redis ([Upstash](http://upstash.com/)).
+# Notion Setup
 
-### Demo
+1. Create a Notion database with the following fields:
+   - `Name`: The title of the blog post. 
+   - `Slug`: The slug of a post (type `Text`).
+   - `Tags`: The tags of a post (type `Multi-select`).
+   - `Date`: The date the post was published (type `Date`).
+   - `Published`: Indicates whether the post is live in production or not (type `Checkbox`). 
+   - `Dev`: Indicates whether the post is live in development or not (type `Checkbox`).
 
-[https://blog-with-comment.vercel.app/](https://blog-with-comment.vercel.app/)
+See this template for reference: [Notion database template](https://zirkelc.notion.site/Template-d22e395bb09c4229bc7c968b46a5acbc?pvs=4)
 
-## `1` Project set up
+2. Follow [Notion's getting started guide](https://developers.notion.com/docs/create-a-notion-integration) to create an integration and share your database with it. This will give you a `NOTION_TOKEN` and a `DATABASE_ID`, which you will need to add to the `.env.local` file.
 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)
-with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the
-example:
-
-```bash
-npx create-next-app --example blog-with-comment blog-with-comment-app
+```
+NOTION_TOKEN=
+DATABASE_ID=
 ```
 
-## `2` Set up environment variables
+3. Create a new page in Notion in your database and fill out the fields. Make sure to set the `Dev` field to `true` to be able to see the post during development.
 
-Copy the `.env.local.example` file in this directory to `.env.local` (which will be ignored by Git):
+# Local Development
 
+To get this running locally on your machine, follow these steps:
+
+1. Fork this repository and give it a new name.
+   
+2. Clone this repository:
 ```bash
-cp .env.local.example .env.local
+git clone https://github.com/<your-username>/<your-repo>.git
 ```
 
-## `3` Configuring Upstash
+1. Install the dependencies:
+```bash
+npm install
+# or 
+yarn 
+# or
+pnpm install
+```
 
-Go to the [Upstash Console](https://console.upstash.com/) and create a new database
+3. Run the development server:
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
 
-#### Upstash environment
+Now you should be able to see the project running at [localhost:4000](localhost:4000) in your browser.
 
-- `REDIS_URL`: Find the URL in the database details page in Upstash Console clicking on **Redis Connect** button.
 
-## `4` Configuring Auth0
+# Deployment
 
-1. Go to the [Auth0 dashboard](https://manage.auth0.com/) and create a new application of type **Single Page Web
-   Applications**.
-2. Go to the settings page of the application
-3. Configure the following settings:
-   - **Allowed Callback URLs**: Should be set to `http://localhost:3000/` when testing locally or typically
-     to `https://myapp.com/` when deploying your application.
-   - **Allowed Logout URLs**: Should be set to `http://localhost:3000/` when testing locally or typically
-     to `https://myapp.com/` when deploying your application.
-   - **Allowed Web Origins**: Should be set to `http://localhost:3000` when testing locally or typically
-     to `https://myapp.com/` when deploying your application.
-4. Save the settings.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fzirkelc%2Fzirkelc.dev&env=NOTION_TOKEN,DATABASE_ID)
 
-#### Auth0 environment
-
-- `NEXT_PUBLIC_AUTH0_DOMAIN`: Can be found in the Auth0 dashboard under `settings`.
-- `NEXT_PUBLIC_AUTH0_CLIENT_ID`: Can be found in the Auth0 dashboard under `settings`.
-- `NEXT_PUBLIC_AUTH0_ADMIN_EMAIL`: This is the email of the admin user which you use while signing in Auth0. Admin is able to delete any comment.
-
-## Deploy Your Local Project
-
-To deploy your local project to Vercel, push it to GitHub/GitLab/Bitbucket
-and [import to Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=upstash-roadmap).
-
-**Important**: When you import your project on Vercel, make sure to click on **Environment Variables** and set them to
-match your `.env.local` file.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
