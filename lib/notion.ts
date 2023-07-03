@@ -44,7 +44,7 @@ n2m.setCustomTransformer('image', async (block) => {
 });
 
 const isPublishedProperty = {
-  property: `is${process.env.NODE_ENV[0].toUpperCase() + process.env.NODE_ENV.slice(1)}`,
+  property: `Is${process.env.NODE_ENV[0].toUpperCase() + process.env.NODE_ENV.slice(1)}`,
   checkbox: {
     equals: true,
   },
