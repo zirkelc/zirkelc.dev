@@ -18,8 +18,6 @@ This project is **strongly inspired** by the following two articles. If you're i
 
 See this template for reference: [Notion database template](https://zirkelc.notion.site/Template-d22e395bb09c4229bc7c968b46a5acbc?pvs=4)
 
-The fields `IsProduction` and `IsDevelopment` are used to filter posts in development and production. If you have lots of posts, this helps to reduce the number of static pages that are generated in development. The environment is determined by the `process.env.NODE_ENV` variable and is set automatically by Next.js.
-
 2. Follow [Notion's getting started guide](https://developers.notion.com/docs/create-a-notion-integration) to create an integration and share your database with it. This will give you a `NOTION_TOKEN` and a `DATABASE_ID`. Create a `.env.local` file in the root directory of the project and add these keys:
 
 ```
@@ -28,6 +26,8 @@ DATABASE_ID=your_database_id_here
 ```
 
 3. Create a new page in Notion in your database and fill out all fields. Make sure to set the `IsDevelopment` field to `true` to be able to see the post in development.
+
+The fields `IsProduction` and `IsDevelopment` are used to filter posts in development and production. If you have lots of posts, this helps to reduce the number of static pages that are generated in development. The environment is determined by the `process.env.NODE_ENV` variable and is set automatically by Next.js.
 
 # Local Development
 
