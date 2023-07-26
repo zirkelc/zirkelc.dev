@@ -42,23 +42,15 @@ git clone https://github.com/<your-username>/<your-repo>.git
 
 3. Install the dependencies:
 ```bash
-npm install
-# or 
-yarn 
-# or
 pnpm install
 ```
 
 4. Run the development server:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
 ```
 
-Now you should be able to see the project running at [localhost:4000](https://localhost:4000) in your browser.
+Now you should be able to see the project running at [localhost:4000](http://localhost:4000) in your browser.
 
 
 # Deploy with Vercel
