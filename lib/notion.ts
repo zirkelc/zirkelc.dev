@@ -14,6 +14,7 @@ type Properties = {
   tags: Array<Tag>;
   date: string;
   slug: string;
+  devArticleId?: number;
 };
 
 type Markdown = string;
@@ -76,12 +77,14 @@ const getProperties = (page: PageObjectResponse): Properties => {
   const tags = 'multi_select' in page.properties.Tags ? getTags(page.properties.Tags.multi_select) : [];
   const date = 'date' in page.properties.Date ? page.properties.Date.date?.start || '' : '';
   const slug = 'rich_text' in page.properties.Slug ? page.properties.Slug.rich_text[0].plain_text : '';
+  const devArticleId = 'number' in page.properties.DevArticleId ? page.properties.DevArticleId.number : undefined;
 
   return {
     title,
     tags,
     date,
     slug,
+    devArticleId,
   };
 };
 
