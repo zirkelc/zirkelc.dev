@@ -1,3 +1,4 @@
+import { useDevArticle } from '../../hooks/useDevArticle';
 import { NotionPost } from '../../lib/notion';
 import { Comments } from '../content/comments';
 import DateTime from '../controls/datetime';
@@ -8,6 +9,13 @@ type Props = {
 };
 
 export default function PostHeader({ post: { properties } }: Props) {
+  const { loading, article } = useDevArticle(properties.devArticleId);
+
+  const comments =
+    properties.devArticleId && !loading && article ? (
+      <Comments comments={article.comments_count} url={article.url} />
+    ) : null;
+
   return (
     <header>
       <h1 className="mb-1 font-mono text-2xl font-bold">{properties.title}</h1>
@@ -17,10 +25,10 @@ export default function PostHeader({ post: { properties } }: Props) {
         {properties.tags.map(({ name: tag }) => (
           <Tag key={tag} tag={tag} />
         ))}
-        {properties.devArticleId ? (
+        {comments ? (
           <>
             {' // '}
-            <Comments devArticleId={properties.devArticleId} />
+            {comments}
           </>
         ) : null}
       </p>
