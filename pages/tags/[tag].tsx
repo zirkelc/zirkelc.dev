@@ -1,8 +1,8 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
+import Link from '../../components/controls/link';
 import Meta from '../../components/layout/meta';
 import PostList from '../../components/post/post-list';
-import Tag from '../../components/post/tag';
 import { NotionPost, getAllPosts, getAllPostsByTag } from '../../lib/notion';
 
 type Params = {
@@ -44,7 +44,14 @@ export default function TagPage({ tag, posts }: InferGetStaticPropsType<typeof g
     <>
       <Meta title={`Posts tagged with ${tag}`} />
 
-      <h1 className="mb-1 text-4xl font-bold">Posts tagged with {<Tag tag={tag} hover />}</h1>
+      <h1 className="mb-1 text-4xl font-bold">
+        Posts tagged with{' '}
+        {
+          <Link hover as={`/tags/${tag}`} href="/tags/[tag]">
+            {`#${tag}`}
+          </Link>
+        }
+      </h1>
 
       <PostList posts={posts} />
     </>
