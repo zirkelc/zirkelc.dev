@@ -10,7 +10,7 @@ type Params = {
 
 type Props = {
   post: NotionPost;
-  article?: DevArticle;
+  article: DevArticle | null;
 };
 
 export const getStaticProps: GetStaticProps<Props, Params> = async ({ params }) => {

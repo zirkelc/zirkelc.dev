@@ -14,15 +14,15 @@ export type DevArticle = {
   positive_reactions_count: number;
 };
 
-export async function getDevArticle(devArticleId?: number): Promise<DevArticle | undefined> {
-  if (!devArticleId) return undefined;
+export async function getDevArticle(devArticleId?: number): Promise<DevArticle | null> {
+  if (!devArticleId) return null;
 
   try {
     const response = await fetch(`https://dev.to/api/articles/${devArticleId}`);
     const article = await response.json();
 
-    return 'error' in article ? undefined : article;
+    return 'error' in article ? null : article;
   } catch (error) {
-    return undefined;
+    return null; //! null is serializable in JSON
   }
 }
