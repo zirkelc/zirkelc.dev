@@ -177,7 +177,10 @@ export const getSinglePostBySlug = async (slug: string): Promise<NotionPost | nu
     },
   });
 
-  if (posts.length === 0) return null;
+  if (posts.length === 0) {
+    console.warn(`No post found with slug: ${slug}`);
+    return null;
+  }
 
   const [post] = posts;
   const markdown = await getMarkdown(post.id);
