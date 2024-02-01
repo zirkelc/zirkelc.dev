@@ -6,7 +6,7 @@ export default function Footer() {
       <hr />
       <footer className="flex flex-row justify-between py-6">
         <div className="font-mono text-sm text-gray-500">
-          {'Chris Zirkel ('}
+          {'Chris Cook ('}
           <Link href="https://github.com/zirkelc" className="underline">
             @zirkelc
           </Link>

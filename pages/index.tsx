@@ -21,7 +21,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 export default function HomePage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Meta title={"Chris Zirkel's Blog"} />
+      <Meta title={"Chris Cooks's Blog"} />
       <PostList posts={posts} />
     </>
   );

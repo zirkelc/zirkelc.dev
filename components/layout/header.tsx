@@ -5,9 +5,9 @@ export default function Header() {
   return (
     <header className="flex flex-row justify-between py-6">
       <nav className="flex items-center space-x-4">
-        <div className="flex h-8 w-8 bg-black text-white hover:bg-white hover:text-black">
-          <Link href="/" className="font-serif text-4xl font-bold">
-            Z.
+        <div className="flex bg-black text-white hover:bg-white hover:text-black">
+          <Link href="/" className="px-1 font-mono text-lg font-bold tracking-tighter">
+            @zirkelc
           </Link>
         </div>
       </nav>
@@ -22,7 +22,11 @@ export default function Header() {
         </Link>
 
         <Link href="https://dev.to/zirkelc">
-          <Image src="/dev.to.svg" height={32} width={32} alt="Dev.to" />
+          <Image src="/dev.to.svg" height={32} width={32} alt="DEV.to" />
+        </Link>
+
+        <Link href="https://twitter.com/zirkelc_">
+          <Image src="/twitter.svg" height={32} width={32} alt="Twitter" />
         </Link>
       </nav>
     </header>
