@@ -1,19 +1,22 @@
 # Welcome to zirkelc.dev
-This is the repository of my personal blog, [zirkelc.dev](https://zirkelc.dev). The site is built using [Notion](https://notion.so) as the Content Management System (CMS), [Next.js](https://nextjs.org/) as the React framework and [Tailwind CSS](https://tailwindcss.com/) for the styling. 
+
+This is the repository of my personal blog, [zirkelc.dev](https://zirkelc.dev). The site is built using [Notion](https://notion.so) as the Content Management System (CMS), [Next.js](https://nextjs.org/) as the React framework and [Tailwind CSS](https://tailwindcss.com/) for the styling.
 
 # Before You Start
+
 This project is **strongly inspired** by the following two articles. If you're interested in how it works, I highly recommend you to check out these great resources:
+
 - [Building a Notion Blog with Public API](https://samuelkraft.com/blog/building-a-notion-blog-with-public-api) by [Samuel Kraft](https://samuelkraft.com/)
 - [How to Create a Next.js Blog Using Notion as a CMS](https://bejamas.io/blog/how-to-create-next-js-blog-using-notion-as-a-cms/) by [Bejamas](https://bejamas.io/)
 
 # Notion Setup
 
 1. Create a Notion database with the following fields:
-   - `Name`: The title of the blog post. 
+   - `Name`: The title of the blog post.
    - `Slug`: The slug of a post (type `Text`).
    - `Tags`: The tags of a post (type `Multi-select`).
    - `Date`: The date the post was published (type `Date`).
-   - `IsProduction`: Indicates whether the post is live in production or not (type `Checkbox`). 
+   - `IsProduction`: Indicates whether the post is live in production or not (type `Checkbox`).
    - `IsDevelopment`: Indicates whether the post is live in development or not (type `Checkbox`).
 
 See this template for reference: [Notion database template](https://zirkelc.notion.site/Template-d22e395bb09c4229bc7c968b46a5acbc?pvs=4)
@@ -34,24 +37,25 @@ The fields `IsProduction` and `IsDevelopment` are used to filter posts in develo
 To get this running locally on your machine, follow these steps:
 
 1. Fork this repository and give it a new name.
-   
 2. Clone this repository:
+
 ```bash
 git clone https://github.com/<your-username>/<your-repo>.git
 ```
 
 3. Install the dependencies:
+
 ```bash
 pnpm install
 ```
 
 4. Run the development server:
+
 ```bash
 pnpm dev
 ```
 
 Now you should be able to see the project running at [localhost:4000](http://localhost:4000) in your browser.
-
 
 # Deploy with Vercel
 

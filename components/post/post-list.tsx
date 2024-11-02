@@ -15,13 +15,13 @@ export default function PostList({ posts }: Props) {
           key={post.properties.slug}
           as={`/posts/${post.properties.slug}`}
           href="/posts/[slug]"
-          className="group grid md:grid-cols-[100px_auto] md:gap-x-2 hover:bg-black py-0 px-1"
+          className="group grid py-0 px-1 hover:bg-black md:grid-cols-[100px_auto] md:gap-x-2"
         >
-          <div className="flex items-center justify-start font-mono tracking-tighter text-gray-400 text-sm group-hover:text-white">
+          <div className="flex items-center justify-start font-mono text-sm tracking-tighter text-gray-400 group-hover:text-white">
             <DateTime dateString={post.properties.date} />
           </div>
           <div className="mb-6 flex overflow-hidden md:mb-0">
-            <span className="truncate font-mono font-bold text-black text-sm group-hover:text-white">
+            <span className="truncate font-mono text-sm font-bold text-black group-hover:text-white">
               {post.properties.title}
             </span>
           </div>

@@ -8,7 +8,8 @@
     "preinstall": "npx only-allow pnpm",
     "dev": "next dev -p 4000",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.3",

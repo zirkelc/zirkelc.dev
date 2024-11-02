@@ -15,13 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-env.d.ts",
-    "remark-html.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "tailwind.config.js",
-    "postcss.config.js"
-  ],
+  "include": ["next-env.d.ts", "remark-html.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js", "postcss.config.js"],
   "exclude": ["node_modules"]
 }
