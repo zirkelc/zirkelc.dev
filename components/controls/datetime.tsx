@@ -7,6 +7,6 @@ type Props = {
 
 export default function DateTime({ dateString, relative }: Props) {
   const date = parseISO(dateString);
-  const formattedDate = relative ? formatDistanceToNow(date, { addSuffix: true }) : format(date, 'LLLL	d, yyyy');
+  const formattedDate = relative ? formatDistanceToNow(date, { addSuffix: true }) : format(date, 'LLL	d, yyyy');
   return <time dateTime={dateString}>{formattedDate}</time>;
 }

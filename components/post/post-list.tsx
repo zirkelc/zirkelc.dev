@@ -9,22 +9,23 @@ type Props = {
 
 export default function PostList({ posts }: Props) {
   return posts.length ? (
-    <div className="grid grid-cols-1 md:grid-cols-[160px_auto] md:gap-x-2 md:gap-y-4">
+    <div className="grid grid-cols-1 md:gap-y-4">
       {posts.map((post) => (
-        <Fragment key={post.properties.slug}>
-          <div className="flex items-center justify-start font-mono tracking-tighter text-gray-400 md:justify-end ">
+        <Link
+          key={post.properties.slug}
+          as={`/posts/${post.properties.slug}`}
+          href="/posts/[slug]"
+          className="group grid md:grid-cols-[100px_auto] md:gap-x-2 hover:bg-black py-0 px-1"
+        >
+          <div className="flex items-center justify-start font-mono tracking-tighter text-gray-400 text-sm group-hover:text-white">
             <DateTime dateString={post.properties.date} />
           </div>
-          <div className="mb-6 flex md:mb-0">
-            <Link
-              as={`/posts/${post.properties.slug}`}
-              href="/posts/[slug]"
-              className="truncate font-mono font-bold text-black transition-colors duration-200 hover:bg-black hover:text-white md:p-2"
-            >
+          <div className="mb-6 flex overflow-hidden md:mb-0">
+            <span className="truncate font-mono font-bold text-black text-sm group-hover:text-white">
               {post.properties.title}
-            </Link>
+            </span>
           </div>
-        </Fragment>
+        </Link>
       ))}
     </div>
   ) : (
