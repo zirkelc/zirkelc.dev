@@ -1,9 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { IconBsky } from '../icons/bluesky';
-import { IconTwitter } from '../icons/twitter';
-import { IconGitHub } from '../icons/github';
-import { IconDevTo } from '../icons/dev.to';
 
 export default function Header() {
   return (
