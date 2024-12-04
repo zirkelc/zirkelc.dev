@@ -1,5 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { IconBsky } from '../icons/bluesky';
+import { IconTwitter } from '../icons/twitter';
+import { IconGitHub } from '../icons/github';
+import { IconDevTo } from '../icons/dev.to';
 
 export default function Header() {
   return (
@@ -14,11 +18,7 @@ export default function Header() {
 
       <nav className="flex items-center space-x-4">
         <Link href="https://github.com/zirkelc">
-          <Image src="/github.svg" height={32} width={32} alt="GitHub" />
-        </Link>
-
-        <Link href="https://www.linkedin.com/in/christian-zirkel/">
-          <Image src="/linkedin.svg" height={32} width={32} alt="LinkedIn" />
+          <Image src="/github.svg" height={24} width={24} alt="GitHub" />
         </Link>
 
         <Link href="https://dev.to/zirkelc">
@@ -26,7 +26,11 @@ export default function Header() {
         </Link>
 
         <Link href="https://twitter.com/zirkelc_">
-          <Image src="/twitter.svg" height={32} width={32} alt="Twitter" />
+          <Image src="/twitter.svg" height={24} width={24} alt="Twitter" />
+        </Link>
+
+        <Link href="https://bsky.app/profile/zirkelc.dev">
+          <Image src="/bluesky.svg" height={24} width={24} alt="Bluesky" />
         </Link>
       </nav>
     </header>

@@ -11,14 +11,15 @@ type Props = {
 export default function PostHeader({ post, article }: Props) {
   const { properties } = post;
 
-  const tags =
-    properties.tags?.length > 0
-      ? properties.tags.map(({ name: tag }) => (
-          <Link key={tag} as={`/tags/${tag}`} href="/tags/[tag]">
-            {`#${tag}`}
-          </Link>
-        ))
-      : null;
+  // Removed tags
+  // const tags =
+  //   properties.tags?.length > 0
+  //     ? properties.tags.map(({ name: tag }) => (
+  //         <Link key={tag} as={`/tags/${tag}`} href="/tags/[tag]">
+  //           {`#${tag}`}
+  //         </Link>
+  //       ))
+  //     : null;
 
   const comments = article ? (
     <Link asTab href={`${article.url}#comments`}>
@@ -34,12 +35,12 @@ export default function PostHeader({ post, article }: Props) {
       <p className="space-x-1 font-mono text-sm tracking-tighter text-gray-400">
         <DateTime dateString={properties.date} relative />
 
-        {tags ? (
+        {/* {tags ? (
           <>
             {' // '}
             {tags}
           </>
-        ) : null}
+        ) : null} */}
 
         {comments ? (
           <>
