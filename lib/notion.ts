@@ -7,9 +7,7 @@ import {
   QueryDatabaseParameters,
 } from '@notionhq/client/build/src/api-endpoints';
 import { NotionToMarkdown } from 'notion-to-md';
-// import getMetadata from 'page-metadata-parser';
 import { getMetadata } from 'page-metadata-parser';
-
 import domino from 'domino';
 
 type Tag = { name: string; color: string };
@@ -40,12 +38,13 @@ const n2m = new NotionToMarkdown({ notionClient: notion });
 n2m.setCustomTransformer('image', async (block) => {
   const { image } = block as ImageBlockObjectResponse;
   const src = image.type === 'external' ? image.external.url : image.file.url;
-  const caption = image.caption?.length > 0 ? image.caption[0]?.plain_text : '';
+  const text = image.caption?.length > 0 ? image.caption[0]?.plain_text : '';
+  const href = image.caption?.length > 0 ? image.caption[0].href : '';
 
   return `
   <figure>
-    <img src="${src}" alt=${caption} />
-    <figcaption>${caption}</figcaption>
+    <img src="${src}" alt=${text} />
+    <figcaption>${href ? `<a href="${href}" target="_blank" rel="noopener noreferrer">${text}</a>` : text}</figcaption>
   </figure>`;
 });
 
