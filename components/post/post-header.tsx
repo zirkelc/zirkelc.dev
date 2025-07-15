@@ -43,7 +43,6 @@ export default function PostHeader({ post, article }: Props) {
     <header>
       <div className="mb-1 flex items-center justify-between">
         <h1 className="font-mono text-xl font-bold">{properties.title}</h1>
-        
       </div>
       <div className="flex items-center justify-between">
         <p className="space-x-1 font-mono text-sm tracking-tighter text-gray-400">

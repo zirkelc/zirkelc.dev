@@ -33,9 +33,9 @@ module.exports = {
 
             figcaption: {
               'text-align': 'center',
-              
+
               a: {
-                color: 'inherit'
+                color: 'inherit',
               },
             },
           },
