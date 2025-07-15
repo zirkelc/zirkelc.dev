@@ -66,7 +66,7 @@ export default function PostPage({ post, article, isMarkdown }: InferGetStaticPr
     <>
       <Meta title={post.properties.title} />
 
-      <Post post={post} article={article} isMarkdown={isMarkdown} />
+      <Post post={post} article={article} />
     </>
   );
 }
