@@ -65,7 +65,7 @@ export default function PostHeader({ post, article }: Props) {
         <button
           onClick={() => showMarkdown(true)}
           title="Show as markdown"
-          className="rounded bg-gray-100 px-2 py-1 font-mono text-xs transition-colors hover:bg-gray-200"
+          className="rounded bg-gray-100 px-2 py-1 font-mono text-xs transition-colors  hover:bg-black hover:text-white"
         >
           {'.md'}
         </button>
