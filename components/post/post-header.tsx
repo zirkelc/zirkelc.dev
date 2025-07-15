@@ -2,6 +2,7 @@ import { DevArticle } from '../../lib/dev';
 import { NotionPost } from '../../lib/notion';
 import DateTime from '../controls/datetime';
 import Link from '../controls/link';
+import { useRouter } from 'next/router';
 
 type Props = {
   post: NotionPost;
@@ -10,6 +11,7 @@ type Props = {
 
 export default function PostHeader({ post, article }: Props) {
   const { properties } = post;
+  const router = useRouter();
 
   // Removed tags
   // const tags =
@@ -29,26 +31,46 @@ export default function PostHeader({ post, article }: Props) {
     </Link>
   ) : null;
 
+  const showMarkdown = (asTab: boolean = false) => {
+    if (asTab) {
+      window.open(`/api/posts/${properties.slug}.md`, '_blank');
+    } else {
+      window.location.href = `/api/posts/${properties.slug}.md`;
+    }
+  };
+
   return (
     <header>
-      <h1 className="mb-1 font-mono text-xl font-bold">{properties.title}</h1>
-      <p className="space-x-1 font-mono text-sm tracking-tighter text-gray-400">
-        <DateTime dateString={properties.date} relative />
+      <div className="mb-1 flex items-center justify-between">
+        <h1 className="font-mono text-xl font-bold">{properties.title}</h1>
+        
+      </div>
+      <div className="flex items-center justify-between">
+        <p className="space-x-1 font-mono text-sm tracking-tighter text-gray-400">
+          <DateTime dateString={properties.date} relative />
 
-        {/* {tags ? (
+          {/* {tags ? (
           <>
             {' // '}
             {tags}
           </>
         ) : null} */}
 
-        {comments ? (
-          <>
-            {' // '}
-            {comments}
-          </>
-        ) : null}
-      </p>
+          {comments ? (
+            <>
+              {' // '}
+              {comments}
+            </>
+          ) : null}
+        </p>
+        <button
+          onClick={() => showMarkdown(true)}
+          title="Show as markdown"
+          className="rounded bg-gray-100 px-2 py-1 font-mono text-xs transition-colors hover:bg-gray-200"
+        >
+          {'.md'}
+        </button>
+      </div>
     </header>
   );
 }
