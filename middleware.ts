@@ -50,8 +50,8 @@ export async function middleware(request: NextRequest) {
         return NextResponse.json({ error: 'Post not found' }, { status: 404 });
       }
 
-      const { properties, markdown } = await response.json();
-      const content = `${properties?.title ? `# ${properties.title}` : ''} \n\n${markdown}`;
+      const { post } = await response.json();
+      const content = `${post.properties?.title ? `# ${post.properties.title}` : ''} \n\n${post.markdown}`;
 
       return sendMarkdown(content, slug);
     }
