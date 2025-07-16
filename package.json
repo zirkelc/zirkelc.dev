@@ -9,7 +9,8 @@
     "dev": "next dev -p 4000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky"
   },
   "dependencies": {
     "@notionhq/client": "^2.2.3",
@@ -41,6 +42,7 @@
     "eslint-config-next": "13.2.4",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^9.1.7",
     "markdown-table": "^3.0.3",
     "postcss": "^8.4.21",
     "prettier": "^2.8.7",

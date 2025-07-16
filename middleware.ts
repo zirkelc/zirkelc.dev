@@ -8,7 +8,7 @@ const sendMarkdown = async (body: string, filename: string) => {
       'Content-Disposition': `inline; filename="${filename}.md"`,
     },
   });
-}
+};
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -25,7 +25,9 @@ export async function middleware(request: NextRequest) {
 
       const { posts } = await response.json();
 
-      const content = posts.map((post) => `- [${post.properties.title}](${new URL(`/posts/${post.properties.slug}.md`, request.url)})`).join('\n\n');
+      const content = posts
+        .map((post) => `- [${post.properties.title}](${new URL(`/posts/${post.properties.slug}.md`, request.url)})`)
+        .join('\n\n');
 
       return sendMarkdown(content, 'posts');
     }
@@ -33,7 +35,6 @@ export async function middleware(request: NextRequest) {
     // Check if the request is for a markdown version of a post
     if (pathname.startsWith('/posts/') && pathname.endsWith('.md')) {
       const slug = pathname.replace('/posts/', '').replace('.md', '');
-
 
       // Fetch post data from internal API
       const apiUrl = new URL(`/api/posts/${slug}`, request.url);
@@ -57,5 +58,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/posts.md', '/posts/:path*.md',]
+  matcher: ['/posts.md', '/posts/:path*.md'],
 };
