@@ -26,7 +26,13 @@ export async function middleware(request: NextRequest) {
       const { posts } = await response.json();
 
       const content = posts
-        .map((post) => `- [${post.properties.title}](${new URL(`/posts/${post.properties.slug}.md`, request.url)})`)
+        .map(
+          (post) =>
+            `- [${post.properties?.title ? post.properties.title : 'Untitled'}](${new URL(
+              `/posts/${post.properties.slug}.md`,
+              request.url,
+            )})`,
+        )
         .join('\n\n');
 
       return sendMarkdown(content, 'posts');
@@ -45,7 +51,7 @@ export async function middleware(request: NextRequest) {
       }
 
       const { properties, markdown } = await response.json();
-      const content = `# ${properties.title}\n\n${markdown}`;
+      const content = `${properties?.title ? `# ${properties.title}` : ''} \n\n${markdown}`;
 
       return sendMarkdown(content, slug);
     }
