@@ -16,6 +16,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   res.status(200).json({
     properties: post.properties,
-    markdown: post.markdown.replace(/\n{2}/g, '\n')
+    markdown: post.markdown.replace(/\n{2}/g, '\n'),
   });
 }
