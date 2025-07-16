@@ -33,9 +33,9 @@ export default function PostHeader({ post, article }: Props) {
 
   const showMarkdown = (asTab: boolean = false) => {
     if (asTab) {
-      window.open(`/api/posts/${properties.slug}.md`, '_blank');
+      window.open(`/posts/${properties.slug}.md`, '_blank');
     } else {
-      window.location.href = `/api/posts/${properties.slug}.md`;
+      window.location.href = `/posts/${properties.slug}.md`;
     }
   };
 
