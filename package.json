@@ -4,6 +4,9 @@
   "homepage": "https://zirkelc.dev",
   "private": true,
   "packageManager": "pnpm@8.7.0",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "next dev -p 4000",
