@@ -1,28 +1,28 @@
 import { GetStaticProps, InferGetStaticPropsType } from 'next';
 import Meta from '../components/layout/meta';
-import PostList from '../components/post/post-list';
-import { NotionPost, getAllPosts } from '../lib/notion';
+import NotionPageList from '../components/post/notion-page-list';
+import { getAllNotes, getAllPages, getAllPosts, NotionHeader } from '../lib/notion';
 
 type Props = {
-  posts: NotionPost[];
+  pages: Array<NotionHeader>;
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
-  const data = await getAllPosts();
+  const pages = await getAllPages();
 
   return {
     props: {
-      posts: data,
+      pages,
     },
     revalidate: 60,
   };
 };
 
-export default function HomePage({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function HomePage({ pages }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Meta title={"Chris Cooks's Blog"} />
-      <PostList posts={posts} />
+      <NotionPageList pages={pages} />
     </>
   );
 }

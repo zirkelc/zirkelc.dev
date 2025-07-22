@@ -1,16 +1,16 @@
 import { DevArticle } from '../../lib/dev';
-import { NotionPost } from '../../lib/notion';
+import { NotionBody, NotionHeader } from '../../lib/notion';
 import DateTime from '../controls/datetime';
 import Link from '../controls/link';
 import { useRouter } from 'next/router';
 
 type Props = {
-  post: NotionPost;
-  article?: DevArticle;
+  page: NotionHeader;
+  // article?: DevArticle;
 };
 
-export default function PostHeader({ post, article }: Props) {
-  const { properties } = post;
+export default function NotionPageHeader({ page }: Props) {
+  const { properties } = page;
   const router = useRouter();
 
   // Removed tags
@@ -23,19 +23,22 @@ export default function PostHeader({ post, article }: Props) {
   //       ))
   //     : null;
 
-  const comments = article ? (
-    <Link asTab href={`${article.url}#comments`}>
-      {article.comments_count === 0
-        ? 'Comment on DEV'
-        : `${article.comments_count} comment${article.comments_count > 1 ? 's' : ''}`}
-    </Link>
-  ) : null;
+  // Removed comments
+  // const comments = article ? (
+  //   <Link asTab href={`${article.url}#comments`}>
+  //     {article.comments_count === 0
+  //       ? 'Comment on DEV'
+  //       : `${article.comments_count} comment${article.comments_count > 1 ? 's' : ''}`}
+  //   </Link>
+  // ) : null;
 
   const showMarkdown = (asTab: boolean = false) => {
+    const pathname = router.asPath.replace(`/${properties.slug}`, `/${properties.slug}.md`);
+
     if (asTab) {
-      window.open(`/posts/${properties.slug}.md`, '_blank');
+      window.open(pathname, '_blank');
     } else {
-      window.location.href = `/posts/${properties.slug}.md`;
+      window.location.href = pathname;
     }
   };
 
@@ -55,12 +58,12 @@ export default function PostHeader({ post, article }: Props) {
           </>
         ) : null} */}
 
-          {comments ? (
+          {/* {comments ? (
             <>
               {' // '}
               {comments}
             </>
-          ) : null}
+          ) : null} */}
         </p>
         <button
           onClick={() => showMarkdown(true)}

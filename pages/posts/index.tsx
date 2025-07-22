@@ -1,9 +1,10 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
-import PostList from '../../components/post/post-list';
-import { NotionPost, getAllPosts } from '../../lib/notion';
+import NotionPageList from '../../components/post/notion-page-list';
+import PostList from '../../components/post/notion-page-list';
+import { getAllPosts, NotionHeader } from '../../lib/notion';
 
 type Props = {
-  posts: NotionPost[];
+  pages: Array<NotionHeader>;
 };
 
 export const getStaticProps: GetStaticProps<Props> = async () => {
@@ -11,12 +12,12 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 
   return {
     props: {
-      posts: data,
+      pages: data,
     },
     revalidate: 60,
   };
 };
 
-export default function Posts({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <PostList posts={posts} />;
+export default function Posts({ pages }: InferGetStaticPropsType<typeof getStaticProps>) {
+  return <NotionPageList pages={pages} />;
 }

@@ -18,15 +18,19 @@ type Properties = {
   date: string;
   slug: string;
   devArticleId?: number;
+  type: 'Post' | 'Note' | null;
 };
 
 type Markdown = string;
 
-export type NotionPost = {
+export type NotionHeader = {
   id: string;
   properties: Properties;
-  markdown?: Markdown;
-  blocks?: any[];
+};
+
+export type NotionBody = {
+  id: string;
+  markdown: Markdown;
 };
 
 const notion = new Client({
@@ -84,7 +88,7 @@ const isPublishedProperty = {
 };
 
 type Filter = Pick<QueryDatabaseParameters, 'filter'>;
-const query = async (filter: Filter): Promise<NotionPost[]> => {
+const query = async (filter: Filter): Promise<Array<NotionHeader>> => {
   const pages = await notion.databases.query({
     ...filter,
     sorts: [
@@ -110,6 +114,10 @@ const getProperties = (page: PageObjectResponse): Properties => {
   const date = 'date' in page.properties.Date ? page.properties.Date.date?.start || '' : '';
   const slug = 'rich_text' in page.properties.Slug ? page.properties.Slug.rich_text[0].plain_text : '';
   const devArticleId = 'number' in page.properties.DevArticleId ? page.properties.DevArticleId.number : undefined;
+  const type =
+    'select' in page.properties.Type && page.properties.Type.select
+      ? (page.properties.Type.select.name as 'Post' | 'Note')
+      : 'Post';
 
   return {
     title,
@@ -117,6 +125,7 @@ const getProperties = (page: PageObjectResponse): Properties => {
     date,
     slug,
     devArticleId,
+    type,
   };
 };
 
@@ -128,17 +137,57 @@ const getMarkdown = async (id: string): Promise<Markdown> => {
   return markdown.replace(/\n{2}/g, '\n');
 };
 
-export const getAllPosts = async (): Promise<NotionPost[]> => {
+export const getAllPosts = async (): Promise<Array<NotionHeader>> => {
   const posts = await query({
     filter: {
-      ...isPublishedProperty,
+      and: [
+        {
+          ...isPublishedProperty,
+        },
+        {
+          or: [
+            {
+              property: 'Type',
+              select: {
+                equals: 'post',
+              },
+            },
+            {
+              property: 'Type',
+              select: {
+                is_empty: true,
+              },
+            },
+          ],
+        },
+      ],
     },
   });
 
-  return posts;
+  return posts ?? [];
 };
 
-export const getAllPostsByTag = async (tag: string): Promise<NotionPost[]> => {
+export const getAllNotes = async (): Promise<Array<NotionHeader>> => {
+  const notes = await query({
+    filter: {
+      and: [
+        {
+          ...isPublishedProperty,
+        },
+        {
+          property: 'Type',
+          select: {
+            equals: 'Note',
+          },
+        },
+      ],
+    },
+  });
+
+  return notes ?? [];
+};
+
+export const getAllPostsByTag = async (tag: string): Promise<Array<NotionHeader>> => {
   const posts = await query({
     filter: {
       and: [
@@ -158,7 +207,25 @@ export const getAllPostsByTag = async (tag: string): Promise<NotionPost[]> => {
   return posts;
 };
 
-export const getSinglePostBySlug = async (slug: string): Promise<NotionPost | null> => {
+export const getAllPages = async (): Promise<Array<NotionHeader>> => {
+  const [posts, notes] = await Promise.all([getAllPosts(), getAllNotes()]);
+  const pages = [...posts, ...notes].sort(
+    (a, b) => new Date(b.properties.date).getTime() - new Date(a.properties.date).getTime(),
+  );
+
+  return pages;
+};
+
+export const getAllPagesByType = async (type: 'Post' | 'Note'): Promise<Array<NotionHeader>> => {
+  if (type === 'Post') {
+    return await getAllPosts();
+  } else if (type === 'Note') {
+    return await getAllNotes();
+  }
+  return [];
+};
+
+export const getSinglePostBySlug = async (slug: string): Promise<(NotionHeader & NotionBody) | null> => {
   const posts = await query({
     filter: {
       and: [
@@ -173,6 +240,22 @@ export const getSinglePostBySlug = async (slug: string): Promise<NotionPost | nu
         {
           ...isPublishedProperty,
         },
+        {
+          or: [
+            {
+              property: 'Type',
+              select: {
+                equals: 'Post',
+              },
+            },
+            {
+              property: 'Type',
+              select: {
+                is_empty: true,
+              },
+            },
+          ],
+        },
       ],
     },
   });
@@ -186,4 +269,40 @@ export const getSinglePostBySlug = async (slug: string): Promise<NotionPost | nu
   const markdown = await getMarkdown(post.id);
 
   return { ...post, markdown };
+};
+
+export const getSingleNoteBySlug = async (slug: string): Promise<(NotionHeader & NotionBody) | null> => {
+  const notes = await query({
+    filter: {
+      and: [
+        {
+          property: 'Slug',
+          formula: {
+            string: {
+              equals: slug,
+            },
+          },
+        },
+        {
+          ...isPublishedProperty,
+        },
+        {
+          property: 'Type',
+          select: {
+            equals: 'Note',
+          },
+        },
+      ],
+    },
+  });
+
+  if (notes.length === 0) {
+    console.warn(`No note found with slug: ${slug}`);
+    return null;
+  }
+
+  const [note] = notes;
+  const markdown = await getMarkdown(note.id);
+
+  return { ...note, markdown };
 };
