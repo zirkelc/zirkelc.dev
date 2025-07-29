@@ -1,12 +1,11 @@
 import { parseISO, format, formatDistanceToNow } from 'date-fns';
+import { DateTime } from 'millis-js';
 
 type Props = {
   dateString: string;
-  relative?: boolean;
 };
 
-export default function DateTime({ dateString, relative }: Props) {
-  const date = parseISO(dateString);
-  const formattedDate = relative ? formatDistanceToNow(date, { addSuffix: true }) : format(date, 'LLL	d, yyyy');
-  return <time dateTime={dateString}>{formattedDate}</time>;
+export default function ({ dateString }: Props) {
+  const date = DateTime.from(dateString);
+  return <time dateTime={dateString}>{date.format('YYYY-MM-DD')}</time>;
 }

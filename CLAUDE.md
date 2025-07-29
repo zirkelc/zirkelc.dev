@@ -62,7 +62,6 @@ The Notion database must include these fields:
 - `Date` (Date) - Publication date
 - `IsProduction` (Checkbox) - Show in production
 - `IsDevelopment` (Checkbox) - Show in development
-- `DevArticleId` (Number, optional) - Dev.to article ID for cross-posting
 
 ## Markdown Access
 

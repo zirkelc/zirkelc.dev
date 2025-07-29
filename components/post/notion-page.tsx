@@ -1,4 +1,3 @@
-import { DevArticle } from '../../lib/dev';
 import { NotionBody, NotionHeader } from '../../lib/notion';
 import Markdown from '../controls/markdown';
 import NotionPageHeader from './notion-page-header';

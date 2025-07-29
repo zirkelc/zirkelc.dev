@@ -17,7 +17,6 @@ type Properties = {
   tags: Array<Tag>;
   date: string;
   slug: string;
-  devArticleId?: number;
   type: 'Post' | 'Note' | null;
 };
 
@@ -113,7 +112,6 @@ const getProperties = (page: PageObjectResponse): Properties => {
   const tags = 'multi_select' in page.properties.Tags ? getTags(page.properties.Tags.multi_select) : [];
   const date = 'date' in page.properties.Date ? page.properties.Date.date?.start || '' : '';
   const slug = 'rich_text' in page.properties.Slug ? page.properties.Slug.rich_text[0].plain_text : '';
-  const devArticleId = 'number' in page.properties.DevArticleId ? page.properties.DevArticleId.number : undefined;
   const type =
     'select' in page.properties.Type && page.properties.Type.select
       ? (page.properties.Type.select.name as 'Post' | 'Note')
@@ -124,7 +122,6 @@ const getProperties = (page: PageObjectResponse): Properties => {
     tags,
     date,
     slug,
-    devArticleId,
     type,
   };
 };
@@ -223,6 +220,36 @@ export const getAllPagesByType = async (type: 'Post' | 'Note'): Promise<Array<No
     return await getAllNotes();
   }
   return [];
+};
+
+export const getSinglePageBySlug = async (slug: string): Promise<(NotionHeader & NotionBody) | null> => {
+  const pages = await query({
+    filter: {
+      and: [
+        {
+          property: 'Slug',
+          formula: {
+            string: {
+              equals: slug,
+            },
+          },
+        },
+        {
+          ...isPublishedProperty,
+        },
+      ],
+    },
+  });
+
+  if (pages.length === 0) {
+    console.warn(`No page found with slug: ${slug}`);
+    return null;
+  }
+
+  const [page] = pages;
+  const markdown = await getMarkdown(page.id);
+
+  return { ...page, markdown };
 };
 
 export const getSinglePostBySlug = async (slug: string): Promise<(NotionHeader & NotionBody) | null> => {

@@ -1,12 +1,9 @@
-import { DevArticle } from '../../lib/dev';
-import { NotionBody, NotionHeader } from '../../lib/notion';
-import DateTime from '../controls/datetime';
-import Link from '../controls/link';
 import { useRouter } from 'next/router';
+import { NotionHeader } from '../../lib/notion';
+import DateTime from '../controls/datetime';
 
 type Props = {
   page: NotionHeader;
-  // article?: DevArticle;
 };
 
 export default function NotionPageHeader({ page }: Props) {
@@ -49,7 +46,7 @@ export default function NotionPageHeader({ page }: Props) {
       </div>
       <div className="flex items-center justify-between">
         <p className="space-x-1 font-mono text-sm tracking-tighter text-gray-400">
-          <DateTime dateString={properties.date} relative />
+          <DateTime dateString={properties.date} />
 
           {/* {tags ? (
           <>
