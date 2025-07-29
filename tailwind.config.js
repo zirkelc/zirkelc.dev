@@ -9,6 +9,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        mono: ['var(--font-jetbrains-mono)', 'monospace'],
+      },
       // a: ({ theme }) => ({
       //   color: theme('colors.black'),
       //   '&:hover': {

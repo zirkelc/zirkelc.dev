@@ -13,8 +13,8 @@ export default function NotionPageList({ pages }: Props) {
       {pages.map((page) => (
         <Link
           key={page.properties.slug}
-          as={`/${page.properties.type === 'Post' ? 'posts' : 'notes'}/${page.properties.slug}`}
-          href={`/${page.properties.type === 'Post' ? 'posts' : 'notes'}/[slug]`}
+          as={`/posts/${page.properties.slug}`}
+          href={`/posts/[slug]`}
           className="group grid py-0 px-1 hover:bg-black md:grid-cols-[100px_auto] md:gap-x-2"
         >
           <div className="flex items-center justify-start font-mono text-sm tracking-tighter text-gray-400 group-hover:text-white">

@@ -5,18 +5,26 @@ import Container from '../components/layout/container';
 import Footer from '../components/layout/footer';
 import Header from '../components/layout/header';
 import { Analytics } from '@vercel/analytics/react';
+import { JetBrains_Mono } from 'next/font/google';
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+});
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Container>
-      <Header />
-      <Analytics />
+    <main className={jetbrainsMono.variable}>
+      <Container>
+        <Header />
+        <Analytics />
 
-      <main className="py-14">
-        <Component {...pageProps} />
-      </main>
+        <div className="py-14">
+          <Component {...pageProps} />
+        </div>
 
-      <Footer />
-    </Container>
+        <Footer />
+      </Container>
+    </main>
   );
 }

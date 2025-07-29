@@ -14,7 +14,7 @@ export default function NotionPage({ page }: Props) {
     <article>
       <NotionPageHeader page={page} />
 
-      <div className="prose mt-10">
+      <div className="prose mt-10 font-mono">
         <Markdown markdown={markdown} />
       </div>
     </article>
