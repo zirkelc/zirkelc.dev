@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { NotionBody, NotionHeader } from './lib/notion';
 
 const OG_IMAGE_PATHNAME = /\/(posts)\/(?<slug>[a-zA-Z0-9-]*)\.png/;
 const MD_INDEX_PATHNAME = /\/(posts)\.md/;
@@ -9,7 +8,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   /**
-   * Handle opengraph image requests at /posts/<slug>.png or /notes/<slug>.png
+   * Handle opengraph image requests at /posts/<slug>.png
    */
   if (OG_IMAGE_PATHNAME.test(pathname)) {
     const match = pathname.match(OG_IMAGE_PATHNAME);
@@ -23,8 +22,6 @@ export async function middleware(request: NextRequest) {
    * Handle markdown index requests at /posts.md
    */
   if (MD_INDEX_PATHNAME.test(pathname)) {
-    const match = pathname.match(MD_INDEX_PATHNAME);
-
     const mdUrl = new URL(`/api/md`, request.url);
     return NextResponse.rewrite(mdUrl);
   }

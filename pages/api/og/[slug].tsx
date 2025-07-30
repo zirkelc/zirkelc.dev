@@ -23,27 +23,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           style={{
             display: 'flex',
             flexDirection: 'column',
-            width: '100%',
-            height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
-            background: '#fff',
+            width: '100%',
+            height: '100%',
             padding: '64px',
+            background: '#fff',
           }}
         >
-          <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex' }}>
+          <div style={{ position: 'relative', display: 'flex', width: '100%', height: '100%' }}>
             {/* Background Card (offset left and up) */}
             <div
               style={{
                 position: 'absolute',
-                background: '#EEEDED',
-                borderRadius: '6px',
-                border: '5px dashed #000000',
-                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                width: '100%',
-                height: '100%',
                 left: '24px',
                 bottom: '24px',
+                width: '100%',
+                height: '100%',
+                background: '#EEEDED',
+                border: '5px dashed #000000',
+                borderRadius: '6px',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
                 opacity: 0.8,
               }}
             />
@@ -52,33 +52,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             <div
               style={{
                 position: 'absolute',
-                background: 'white',
-                borderRadius: '6px',
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                width: '100%',
-                height: '100%',
-                padding: '48px',
+                top: '0px',
+                left: '0px',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
+                width: '100%',
+                height: '100%',
+                padding: '48px',
+                background: 'white',
                 border: '5px solid #000',
-                left: '0px',
-                top: '0px',
+                borderRadius: '6px',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
               }}
             >
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <h1
                   style={{
-                    fontSize: '64px',
-                    fontWeight: '700',
-                    color: '#111827',
-                    lineHeight: '1.25',
                     marginBottom: '32px',
-                    overflow: 'hidden',
-                    display: '-webkit-box',
-                    WebkitLineClamp: 3,
-                    WebkitBoxOrient: 'vertical',
+                    fontSize: '64px',
                     fontFamily: 'JetBrains Mono',
+                    fontWeight: '700',
+                    lineHeight: '1.25',
+                    color: '#111827',
+                    overflow: 'hidden',
                   }}
                 >
                   {title}
