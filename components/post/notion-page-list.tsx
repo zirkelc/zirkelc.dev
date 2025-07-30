@@ -15,16 +15,15 @@ export default function NotionPageList({ pages }: Props) {
           key={page.properties.slug}
           as={`/posts/${page.properties.slug}`}
           href={`/posts/[slug]`}
-          className="group grid py-0 px-1 hover:bg-black md:grid-cols-[100px_auto] md:gap-x-2"
+          className="group flex items-center py-1 px-1 hover:bg-black"
         >
-          <div className="flex items-center justify-start font-mono text-sm tracking-tighter text-gray-400 group-hover:text-white">
+          <span className="truncate font-mono text-sm font-bold text-black group-hover:text-white">
+            {page.properties.title}
+          </span>
+          <div className="mx-3 min-w-[20px] flex-1 border-b-2 border-dotted border-gray-300 group-hover:border-white"></div>
+          <span className="flex-shrink-0 font-mono text-sm tracking-tighter text-gray-400 group-hover:text-white">
             <DateTime dateString={page.properties.date} />
-          </div>
-          <div className="mb-6 flex overflow-hidden md:mb-0">
-            <span className="truncate font-mono text-sm font-bold text-black group-hover:text-white">
-              {page.properties.title}
-            </span>
-          </div>
+          </span>
         </Link>
       ))}
     </div>
