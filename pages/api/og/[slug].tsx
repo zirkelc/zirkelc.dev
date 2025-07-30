@@ -38,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 position: 'absolute',
                 background: '#EEEDED',
                 borderRadius: '6px',
-                border: '5px solid #000000',
+                border: '5px dashed #000000',
                 boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
                 width: '100%',
                 height: '100%',
@@ -86,7 +86,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '32px', fontFamily: 'JetBrains Mono', fontWeight: '400' }}>by Chris Cook</span>
+                <span style={{ fontSize: '32px', fontFamily: 'JetBrains Mono', fontWeight: '400' }}>Chris Cook</span>
                 <span style={{ fontSize: '32px', fontFamily: 'JetBrains Mono', fontWeight: '800' }}>zirkelc.dev</span>
               </div>
             </div>
