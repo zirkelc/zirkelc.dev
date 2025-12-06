@@ -21,6 +21,7 @@
     "@vercel/analytics": "^1.0.1",
     "@vercel/og": "^0.8.5",
     "domino": "^2.1.6",
+    "katex": "^0.16.25",
     "millis-js": "^0.11.0",
     "next": "^16.0.7",
     "notion-to-md": "^2.5.6",

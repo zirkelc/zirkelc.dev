@@ -131,7 +131,7 @@ const getMarkdown = async (id: string): Promise<Markdown> => {
   const markdown = n2m.toMarkdownString(markdownBlocks);
 
   // Remove double newlines
-  return markdown.replace(/\n{2}/g, '\n');
+  return markdown.parent.replace(/\n{2}/g, '\n');
 };
 
 export const getAllPosts = async (): Promise<Array<NotionHeader>> => {
