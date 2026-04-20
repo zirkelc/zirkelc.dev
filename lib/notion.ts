@@ -146,7 +146,7 @@ export const getAllPosts = async (): Promise<Array<NotionHeader>> => {
             {
               property: 'Type',
               select: {
-                equals: 'post',
+                equals: 'Post',
               },
             },
             {
