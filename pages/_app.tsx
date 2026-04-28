@@ -1,6 +1,7 @@
 import 'tailwindcss/tailwind.css';
 
 import type { AppProps } from 'next/app';
+import { ThemeProvider } from 'next-themes';
 import Container from '../components/layout/container';
 import Footer from '../components/layout/footer';
 import Header from '../components/layout/header';
@@ -14,17 +15,19 @@ const jetbrainsMono = JetBrains_Mono({
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <main className={jetbrainsMono.variable}>
-      <Container>
-        <Header />
-        <Analytics />
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+      <main className={jetbrainsMono.variable}>
+        <Container>
+          <Header />
+          <Analytics />
 
-        <div className="py-14">
-          <Component {...pageProps} />
-        </div>
+          <div className="py-14">
+            <Component {...pageProps} />
+          </div>
 
-        <Footer />
-      </Container>
-    </main>
+          <Footer />
+        </Container>
+      </main>
+    </ThemeProvider>
   );
 }

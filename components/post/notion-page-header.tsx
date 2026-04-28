@@ -42,10 +42,10 @@ export default function NotionPageHeader({ page }: Props) {
   return (
     <header>
       <div className="mb-1 flex items-center justify-between">
-        <h1 className="font-mono text-xl font-bold">{properties.title}</h1>
+        <h1 className="font-mono text-xl font-bold text-black dark:text-white">{properties.title}</h1>
       </div>
       <div className="flex items-center justify-between">
-        <p className="space-x-1 font-mono text-sm tracking-tighter text-gray-400">
+        <p className="space-x-1 font-mono text-sm tracking-tighter text-gray-500 dark:text-gray-400">
           <DateTime dateString={properties.date} />
 
           {/* {tags ? (
@@ -65,7 +65,7 @@ export default function NotionPageHeader({ page }: Props) {
         <button
           onClick={() => showMarkdown(true)}
           title="Show as markdown"
-          className="rounded bg-gray-100 px-2 py-1 font-mono text-xs transition-colors  hover:bg-black hover:text-white"
+          className="rounded bg-gray-100 px-2 py-1 font-mono text-xs text-black transition-colors hover:bg-black hover:text-white dark:bg-gray-800 dark:text-white dark:hover:bg-white dark:hover:text-black"
         >
           {'.md'}
         </button>

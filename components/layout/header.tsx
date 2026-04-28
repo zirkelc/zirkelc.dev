@@ -1,33 +1,21 @@
-import Image from 'next/image';
 import Link from 'next/link';
+import Breadcrumb from './breadcrumb';
+import { GitHubIcon, XIcon } from './social-icons';
+import ThemeToggle from './theme-toggle';
 
 export default function Header() {
   return (
-    <header className="flex flex-row justify-between py-6">
-      <nav className="flex items-center space-x-4">
-        <div className="flex bg-black text-white hover:bg-white hover:text-black">
-          <Link href="/" className="px-1 font-mono text-lg font-bold tracking-tighter">
-            @zirkelc
-          </Link>
-        </div>
-      </nav>
+    <header className="flex flex-row items-center justify-between gap-4 py-6">
+      <Breadcrumb />
 
-      <nav className="flex items-center space-x-4">
-        <Link href="https://github.com/zirkelc">
-          <Image src="/github.svg" height={24} width={24} alt="GitHub" />
+      <nav className="flex items-center gap-4 text-black dark:text-white">
+        <Link href="https://github.com/zirkelc" aria-label="GitHub" className="hover:opacity-70">
+          <GitHubIcon />
         </Link>
-
-        <Link href="https://dev.to/zirkelc">
-          <Image src="/dev.to.svg" height={32} width={32} alt="DEV.to" />
+        <Link href="https://x.com/zirkelc_" aria-label="X" className="hover:opacity-70">
+          <XIcon />
         </Link>
-
-        <Link href="https://twitter.com/zirkelc_">
-          <Image src="/twitter.svg" height={24} width={24} alt="Twitter" />
-        </Link>
-
-        <Link href="https://bsky.app/profile/zirkelc.dev">
-          <Image src="/bluesky.svg" height={24} width={24} alt="Bluesky" />
-        </Link>
+        <ThemeToggle />
       </nav>
     </header>
   );

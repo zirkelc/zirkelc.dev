@@ -8,87 +8,50 @@ This is a personal blog built with Next.js and Notion as the CMS. The site fetch
 
 ## Development Commands
 
-- `pnpm install` - Install dependencies (uses pnpm as package manager)
 - `pnpm dev` - Start development server on port 4000
 - `pnpm build` - Build the project for production
 - `pnpm start` - Start production server
-- `pnpm lint` - Run ESLint
+- `pnpm lint` - Run ESLint (via `next lint`)
+
+Requires Node.js >= 22. `pnpm` is enforced by the `preinstall` script (`only-allow pnpm`).
 
 ## Architecture
 
-### Content Management
+### Content pipeline
 
-- **Notion Integration**: Uses `@notionhq/client` to fetch blog posts from a Notion database
-- **Content Filtering**: Posts are filtered by `IsProduction`/`IsDevelopment` checkbox fields based on `NODE_ENV`
-- **Markdown Processing**: Notion content is converted to Markdown using `notion-to-md` library
-- **Custom Transformers**: Special handling for images (with captions/links) and link previews with metadata
+1. `lib/notion.ts` fetches posts from the Notion database via `@notionhq/client`, filtered by `IsProduction` or `IsDevelopment` depending on `NODE_ENV`.
+2. `notion-to-md` converts each page's blocks to Markdown. Custom transformers in `lib/notion.ts` handle:
+   - Images with captions and optional link wrappers
+   - Link previews: fetches the target URL and uses `page-metadata-parser` (+ `domino`) to render a rich preview card as inline HTML
+3. Markdown is rendered with `react-markdown` + `remark-gfm`, `remark-math`, `rehype-katex`, `rehype-raw` (see `components/controls/markdown.tsx`).
 
-### Data Flow
+### Routing and rendering
 
-1. **Static Generation**: Uses Next.js `getStaticProps` and `getStaticPaths` for SSG
-2. **Revalidation**: Pages revalidate every 60 seconds using ISR
-3. **Routing**: Dynamic routes at `/posts/[slug]` and `/tags/[tag]`
-4. **Post Properties**: Each post has title, slug, tags, date, and optional Dev.to article ID
+- Pages Router (`pages/`), not App Router.
+- `/posts/[slug]` and `/posts` use `getStaticProps` + `getStaticPaths` with ISR (`revalidate: 60`).
+- `middleware.ts` rewrites three virtual URL patterns before they hit the page layer:
+  - `/posts/<slug>.png` → `/api/og/<slug>` (dynamic OG image via `@vercel/og`)
+  - `/posts.md` → `/api/md` (markdown index of all posts)
+  - `/posts/<slug>.md` → `/api/md/<slug>` (raw markdown for a single post)
+- The "MD" button in `components/post/notion-page-header.tsx` simply appends `.md` to the current path — the middleware does the actual rewrite.
 
-### Key Components Structure
+### Notion database schema
 
-- `lib/notion.ts` - Core Notion API integration and data fetching
-- `lib/dev.ts` - Dev.to API integration for additional article metadata
-- `pages/_app.tsx` - App wrapper with common layout (Header, Footer, Container)
-- `components/layout/` - Reusable layout components
-- `components/post/` - Post-specific components
-- `components/controls/` - UI controls (code blocks, links, markdown rendering)
+Required fields on the Notion database:
 
-### Styling
+- `Name` (Title), `Slug` (Text), `Tags` (Multi-select), `Date` (Date)
+- `IsProduction` (Checkbox), `IsDevelopment` (Checkbox) — gate visibility per environment
 
-- **Tailwind CSS**: Uses JIT mode with custom typography plugin
-- **Custom Prose**: Extended typography styles for blog content
-- **Responsive Design**: Mobile-first approach
+### Environment
 
-## Environment Setup
+`.env.local` needs:
 
-Required environment variables in `.env.local`:
+- `NOTION_TOKEN` — Notion integration token
+- `DATABASE_ID` — Notion database ID
 
-- `NOTION_TOKEN` - Notion integration token
-- `DATABASE_ID` - Notion database ID
+## Notes
 
-## Notion Database Schema
-
-The Notion database must include these fields:
-
-- `Name` (Title) - Post title
-- `Slug` (Text) - URL slug
-- `Tags` (Multi-select) - Post tags
-- `Date` (Date) - Publication date
-- `IsProduction` (Checkbox) - Show in production
-- `IsDevelopment` (Checkbox) - Show in development
-
-## Markdown Access
-
-Posts can be accessed as raw markdown files through multiple methods:
-
-### API Route (Recommended for Raw Markdown)
-
-- **URL Format**: `/api/posts/[slug].md` (e.g., `/api/posts/my-post.md`)
-- **Response**: Returns raw markdown with proper `Content-Type: text/markdown` headers
-- **Features**: Includes post title as H1 and proper filename for downloads
-
-### Page Route (Redirects to API)
-
-- **URL Format**: `/posts/[slug].md` (e.g., `/posts/my-post.md`)
-- **Behavior**: Automatically redirects to the API route for raw markdown
-- **Static Generation**: Both HTML and markdown versions are pre-generated at build time
-
-### Toggle Button
-
-- **Location**: Each post header includes a toggle button
-- **Functionality**: "MD" button redirects to API route for raw markdown, "HTML" button returns to formatted post
-- **Example**: Click "MD" on any post to get the raw markdown version
-
-## Development Notes
-
-- TypeScript is configured with strict mode disabled
-- Uses pnpm for package management (enforced by preinstall script)
-- Vercel Analytics integration included
-- Custom Next.js redirects configured in `next.config.js`
-- Link previews fetch metadata and render custom HTML components
+- TypeScript `strict` is **off** (`tsconfig.json`).
+- Prettier: single quotes, trailing commas, 120 col, `prettier-plugin-tailwindcss` for class sorting.
+- Tailwind uses `@tailwindcss/typography` with a customized `prose` theme in `tailwind.config.js`.
+- Redirects live in `next.config.js` (currently just `/nodes-2023` → external Notion page).

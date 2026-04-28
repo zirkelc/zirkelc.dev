@@ -1,20 +1,26 @@
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus as theme } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { oneLight, vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 type Props = {
   language: string;
   code: string;
 };
 
+const CUSTOM_STYLE = { padding: undefined, margin: undefined, background: 'transparent' } as const;
+
 export default function Code({ language, code }: Props) {
   return (
-    <SyntaxHighlighter
-      language={language}
-      PreTag="div"
-      style={theme}
-      customStyle={{ padding: undefined, margin: undefined, background: undefined }}
-    >
-      {code}
-    </SyntaxHighlighter>
+    <>
+      <div className="dark:hidden">
+        <SyntaxHighlighter language={language} PreTag="div" style={oneLight} customStyle={CUSTOM_STYLE}>
+          {code}
+        </SyntaxHighlighter>
+      </div>
+      <div className="hidden dark:block">
+        <SyntaxHighlighter language={language} PreTag="div" style={vscDarkPlus} customStyle={CUSTOM_STYLE}>
+          {code}
+        </SyntaxHighlighter>
+      </div>
+    </>
   );
 }

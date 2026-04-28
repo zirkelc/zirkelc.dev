@@ -24,6 +24,7 @@
     "katex": "^0.16.25",
     "millis-js": "^0.11.0",
     "next": "^16.0.7",
+    "next-themes": "^0.4.6",
     "notion-to-md": "^2.5.6",
     "page-metadata-parser": "^1.1.4",
     "react": "^18.2.0",

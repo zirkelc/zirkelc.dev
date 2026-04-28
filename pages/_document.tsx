@@ -10,7 +10,7 @@ export default function Document() {
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
       </Head>
-      <body className="bg-white text-black antialiased selection:bg-black selection:text-white">
+      <body className="bg-white text-black antialiased selection:bg-black selection:text-white dark:bg-black dark:text-white dark:selection:bg-white dark:selection:text-black">
         <Main />
         <NextScript />
       </body>
