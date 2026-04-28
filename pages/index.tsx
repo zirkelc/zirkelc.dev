@@ -29,25 +29,8 @@ export default function HomePage({ pages }: InferGetStaticPropsType<typeof getSt
 
       <section className="mb-12 space-y-4">
         <h2 className="font-mono text-sm uppercase tracking-wider text-gray-500 dark:text-gray-400">About</h2>
-        <div className="flex items-center gap-4">
-          <div className="min-w-0 flex-1 space-y-4 font-mono text-base">
-            <p className="text-black dark:text-white">Hi, I&apos;m Chris.</p>
-            <p className="text-black dark:text-white">
-              I&apos;m a software engineer from Mannheim, Germany and co-founder of{' '}
-              <Link href="https://flyweight.io" className="underline hover:no-underline">
-                flyweight.io
-              </Link>
-              .
-            </p>
-            <p className="text-black dark:text-white">I build things with TypeScript and ship open source projects.</p>
-            <Link
-              href="/about"
-              className="block text-gray-500 hover:text-black dark:text-gray-500 dark:hover:text-white"
-            >
-              More about me →
-            </Link>
-          </div>
-          <div className="h-20 w-20 shrink-0 overflow-hidden rounded-full">
+        <div className="space-y-4 font-mono text-base">
+          <div className="float-right ml-4 h-20 w-20 shrink-0 overflow-hidden rounded-full">
             <Image
               src="/me.jpg"
               alt="Chris Cook"
@@ -56,6 +39,17 @@ export default function HomePage({ pages }: InferGetStaticPropsType<typeof getSt
               className="h-full w-full object-cover grayscale transition hover:grayscale-0"
             />
           </div>
+          <p className="text-black dark:text-white">Hi, I&apos;m Chris.</p>
+          <p className="text-black dark:text-white">
+            I&apos;m a software engineer from Mannheim, Germany and co-founder of{' '}
+            <Link href="https://flyweight.io" className="underline hover:no-underline">
+              flyweight.io
+            </Link>
+            . I build things with TypeScript and ship open source projects.
+          </p>
+          <Link href="/about" className="block text-gray-500 hover:text-black dark:text-gray-500 dark:hover:text-white">
+            More about me →
+          </Link>
         </div>
       </section>
 
