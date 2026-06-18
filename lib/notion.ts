@@ -108,10 +108,12 @@ const getTags = (tags: MultiSelectPropertyItemObjectResponse['multi_select']) =>
   tags.map(({ name, color }) => ({ name, color })).sort((a, b) => a.name.localeCompare(b.name));
 
 const getProperties = (page: PageObjectResponse): Properties => {
-  const title = 'title' in page.properties.Name ? page.properties.Name.title[0].plain_text : '';
+  /** Notion splits a property value into multiple rich-text runs when it is edited in the middle, so join all runs. */
+  const title = 'title' in page.properties.Name ? page.properties.Name.title.map((t) => t.plain_text).join('') : '';
   const tags = 'multi_select' in page.properties.Tags ? getTags(page.properties.Tags.multi_select) : [];
   const date = 'date' in page.properties.Date ? page.properties.Date.date?.start || '' : '';
-  const slug = 'rich_text' in page.properties.Slug ? page.properties.Slug.rich_text[0].plain_text : '';
+  const slug =
+    'rich_text' in page.properties.Slug ? page.properties.Slug.rich_text.map((t) => t.plain_text).join('') : '';
   const type =
     'select' in page.properties.Type && page.properties.Type.select
       ? (page.properties.Type.select.name as 'Post' | 'Note')
