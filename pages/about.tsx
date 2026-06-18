@@ -26,9 +26,9 @@ export default function AboutPage() {
         </p>
 
         <p>
-          I started coding at 14, building my clan website in PHP. A few years later I started an apprenticeship in
-          software engineering at the German chemical company BASF, while doing a part-time university degree in
-          Computer Science and Economics.
+          I started coding at 14, mainly to build a website for my clan in PHP. Then the fascination took over. A few
+          years later I started an apprenticeship in software engineering at the German chemical company BASF, while
+          doing a part-time university degree in Computer Science and Economics.
         </p>
 
         <p>
